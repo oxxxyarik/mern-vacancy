@@ -1,5 +1,5 @@
 import express from "express"
-import { createVacancy, deleteVacancy, getAllVacancies, updateVacancy } from "../controllers/vacancyController";
+import { createVacancy, deleteVacancy, getAllVacancies, updateVacancy } from "../controllers/vacancyController.js";
 
 const router = express.Router();
 

@@ -7,9 +7,9 @@ export function createVacancy(req, res){
 };
 
 export function updateVacancy(req, res){
-    res.status(201).json({message:"Vacancy updated succesfully!"})
+    res.status(200).json({message:"Vacancy updated succesfully!"})
 };
 
 export function deleteVacancy(req, res){
-    res.status(201).json({message:"Vacancy deleted succesfully!"})
+    res.status(200).json({message:"Vacancy deleted succesfully!"})
 };

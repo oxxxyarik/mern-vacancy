@@ -1,15 +1,23 @@
 import express from "express"
 import vacancyRoutes from "./routes/vacancyRoutes.js"
+import { connectDB } from "./config/db.js";
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const app = express();
+const PORT = process.env.PORT || 5001;
 
-app.use("/api/vacancy", vacancyRoutes)
+app.use(express.json());
 
-app.listen(5001, () =>{
-    console.log("Server started on PORT: 5001");
+connectDB();
+
+app.use("/api/vacancies", vacancyRoutes);
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
-
-
 
 // Endpoint - это конкретный URL + HTTP метод для обработки запроса
 // Route - это группа endpoint'ов с общим префиксом пути
