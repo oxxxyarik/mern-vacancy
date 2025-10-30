@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router'
 import HomePage from './pages/HomePage'
-import CreatePage from './pages/CreatePage'
+import ProfilePage from './pages/ProfilePage'
 import VacancyDetailPage from './pages/VacancyDetailPage'
 import toast from 'react-hot-toast'
 
@@ -9,13 +9,10 @@ import toast from 'react-hot-toast'
 //toaster для уведомлений
 const App = () => {
   return (
-    <div data-theme="cmyk">
-      <button className="btn btn-neutral">Neutral</button>
-      <button className="btn btn-primary">Primary</button>
-      <button className="btn btn-secondary">Secondary</button>
+    <div data-theme="sunset">
       <Routes>
         <Route path = "/" element={<HomePage />} /> 
-        <Route path = "/create" element={<CreatePage />} /> 
+        <Route path = "/profile" element={<ProfilePage />} /> 
         <Route path = "/vacancy/:id" element={<VacancyDetailPage />} /> 
       </Routes>
     </div>
