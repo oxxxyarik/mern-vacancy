@@ -13,6 +13,20 @@ const vacancySchema = new mongoose.Schema(
         type:String,
         required: true
     },
+    employerId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Employer', 
+        required: true 
+    },
+    categoryId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Category', 
+        required: true 
+    },
+    isActive: {
+        type: Boolean,
+        default: true
+    },
     salary:{
         type: Number,
         required: true
