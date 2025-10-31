@@ -5,6 +5,7 @@ import Student from "../models/Student.js";
 import User from "../models/User.js"
 import Submission from "../models/Submission.js";
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 
 // Вакансии
 export async function getAllVacancies(req, res) {
@@ -115,6 +116,38 @@ export async function registerUser(req, res) {
     console.error("Error in registerUser:", error);
     res.status(500).json({ 
       message: "Ошибка сервера при регистрации" 
+    });
+  }
+}
+
+export async function loginUser(req, res) {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    
+    if (!user) {
+        return res.status(400).json({message: 'Пользователь не найден'})
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password)
+
+    if (!isMatch) {
+        return res.status(400).json({message: "Неверный пароль, попробуйте снова"})
+    }
+
+    const token = jwt.sign(
+        { userId: user.id },
+        process.env.jwtSecret,
+        { expiresIn: '1h'}
+    )
+
+    res.status(200).json({ token, userId: user.id, role })
+
+  } catch (error) {
+    console.error("Error in loginUser:", error);
+    res.status(500).json({ 
+      message: "Ошибка сервера при входе в аккаунт" 
     });
   }
 }

@@ -33,3 +33,10 @@ export const vacancyValidation = [
     .isLength({min: 10, max: 2000})
     .withMessage('Описание должно быть от 10 до 2000 символов')
 ]
+
+export const loginValidation = [
+    body('email')
+    .isEmail()
+    .withMessage('Введите корректный email')
+    .normalizeEmail(),
+]

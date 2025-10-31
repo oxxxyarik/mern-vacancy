@@ -8,15 +8,16 @@ import {
   getAllEmployers,
   createEmployer,
   registerUser,
+  loginUser,
   createVacancy,
   deleteVacancy,
   getAllVacancies,
   updateVacancy,
   getVacancyById,
   getAllCategories,
-  createCategory
+  createCategory,
 } from "../controllers/vacancyController.js";
-import { registerValidation, vacancyValidation } from "../validators/authValidators.js";
+import { registerValidation, vacancyValidation, loginValidation } from "../validators/authValidators.js";
 import { handleValidationErrors } from "../middleware/validationMiddleware.js";
 
 const router = express.Router();
@@ -31,6 +32,7 @@ router.post("/students", createStudent);
 
 // Роуты для пользователей
 router.post("/register", registerValidation, handleValidationErrors, registerUser);
+router.post("/login", loginValidation, handleValidationErrors, loginUser)
 
 // Роуты для категорий
 router.get("/categories", getAllCategories);
