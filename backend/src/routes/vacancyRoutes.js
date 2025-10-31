@@ -1,13 +1,51 @@
 import express from "express"
-import { createVacancy, deleteVacancy, getAllVacancies, updateVacancy, getVacancyById } from "../controllers/vacancyController.js";
+import {
+  deleteSubmission,
+  createSubmission,
+  getStudentSubmissions,
+  getAllStudents,
+  createStudent,
+  getAllEmployers,
+  createEmployer,
+  registerUser,
+  createVacancy,
+  deleteVacancy,
+  getAllVacancies,
+  updateVacancy,
+  getVacancyById,
+  getAllCategories,
+  createCategory
+} from "../controllers/vacancyController.js";
+import { registerValidation, vacancyValidation } from "../validators/authValidators.js";
+import { handleValidationErrors } from "../middleware/validationMiddleware.js";
 
 const router = express.Router();
 
+// Роуты для работодателей
+router.get("/employers", getAllEmployers);
+router.post("/employers", createEmployer);
+
+// Роуты для студентов
+router.get("/students", getAllStudents);
+router.post("/students", createStudent);
+
+// Роуты для пользователей
+router.post("/register", registerValidation, handleValidationErrors, registerUser);
+
+// Роуты для категорий
+router.get("/categories", getAllCategories);
+router.post("/categories", createCategory);
+
+// Роуты для откликов
+router.post("/submissions", createSubmission);
+router.get("/students/:studentId/submissions", getStudentSubmissions);
+router.delete("/submissions/:id", deleteSubmission);
+
+// Роуты для вакансий
 router.get("/", getAllVacancies);
 router.get("/:id", getVacancyById);
-router.post("/", createVacancy);
-//id - айди конкретной вакансии(обьекта в дб который мой обновляем)
-router.put("/:id", updateVacancy);
+router.post("/", vacancyValidation, handleValidationErrors, createVacancy);
+router.put("/:id", vacancyValidation, handleValidationErrors, updateVacancy);
 router.delete("/:id", deleteVacancy);
 
 export default router;
