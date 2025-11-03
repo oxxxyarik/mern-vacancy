@@ -39,4 +39,10 @@ export const loginValidation = [
     .isEmail()
     .withMessage('Введите корректный email')
     .normalizeEmail(),
+
+    body('password')
+    .notEmpty()
+    .withMessage('Пароль обязателен')
+    .isLength({min: 6})
+    .withMessage('Пароль должен быть минимум 6 символов')
 ]

@@ -142,7 +142,7 @@ export async function loginUser(req, res) {
         { expiresIn: '1h'}
     )
 
-    res.status(200).json({ token, userId: user.id, role })
+    res.status(200).json({ token, userId: user.id, role: user.role })
 
   } catch (error) {
     console.error("Error in loginUser:", error);

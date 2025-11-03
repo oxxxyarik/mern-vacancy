@@ -6,7 +6,7 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-// const [user, setUser] = useState({ id: '1', role: 'student' }); для теста залогиненного пользователя
+// const [user, setUser] = useState({ id: '1', role: 'student' });
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
 

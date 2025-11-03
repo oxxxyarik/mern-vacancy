@@ -34,6 +34,7 @@ router.post("/students", createStudent);
 router.post("/register", registerValidation, handleValidationErrors, registerUser);
 router.post("/login", loginValidation, handleValidationErrors, loginUser)
 
+
 // Роуты для категорий
 router.get("/categories", getAllCategories);
 router.post("/categories", createCategory);
