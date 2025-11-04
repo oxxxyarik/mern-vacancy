@@ -1,15 +1,48 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { Wallet, Building } from 'lucide-react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { Wallet, Building, Send } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
 import axios from 'axios'
 import Navbar from '../components/Navbar'
+import toast from 'react-hot-toast'
 
 
 const VacancyDetailPage = () => {
-  // получение id из url
   const { id } = useParams()
+  const { user } = useAuth()
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const [vacancy, setVacancy] = useState(null)
-  const [loading, setLoading] = useState(true)
+
+  const handleApply = async () => {
+    if (!user) {
+      toast.error('Войдите в аккаунт чтобы откликнуться')
+      navigate('/login')
+      return
+    }
+
+    if (user.role !== 'student') {
+      toast.error('Только студенты могут откликаться на вакансии')
+      return
+    }
+
+    setLoading(true)
+    try {
+      await axios.post('http://localhost:5001/api/vacancies/submissions', {
+        studentId: user.id, //из контекста 
+        vacancyId: id        
+      })
+      toast.success('Отклик отправлен!')
+    } catch (error) {
+      if (error.response?.status === 409) {
+        toast.error('Вы уже откликались на эту вакансию')
+      } else {
+        toast.error('Ошибка при отправке отклика')
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
     const fetchVacancy = async () => {
@@ -47,8 +80,18 @@ const VacancyDetailPage = () => {
             <span>{vacancy.salary} ₽</span>
           </div>
         </div>
-        <button className="btn btn-primary btn-lg w-full">
-          Откликнуться
+        <button 
+          onClick={handleApply}
+          disabled={loading}
+          className="btn btn-primary btn-lg w-full">
+          {loading ? (
+            <span className="loading loading-spinner"></span>
+          ) : (
+            <>
+              <Send className="size-5" />
+              Откликнуться
+            </>
+          )}
         </button>
       </div>
     </div>

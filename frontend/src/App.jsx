@@ -12,7 +12,7 @@ import RegistrationPage from './pages/RegistrationPage'
 //toaster для уведомлений
 const App = () => {
   return (
-    <div data-theme="halloween">
+    <div data-theme="dracula">
       <Routes>
         <Route path = "/" element={<HomePage />} />
         <Route path = "/profile" element = {
